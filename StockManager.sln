@@ -8,7 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2CFBE577
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockManager.Test", "StockManager.Test\StockManager.Test.csproj", "{2F3CB373-90B4-4F66-BCDD-9A9C42B254AD}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Aplication", "Aplication", "{9BD96C9A-B8D7-4B91-9151-7BEDCFB5A0AE}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{9BD96C9A-B8D7-4B91-9151-7BEDCFB5A0AE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Provider", "Provider", "{20453645-6870-4AFA-89E5-5C915919E999}"
 EndProject
@@ -16,7 +16,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockManager.Persistense", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockManager.Domain", "StockManager.Domain\StockManager.Domain.csproj", "{ADBA4264-6A5F-4702-A957-973BA57F0C40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockManager.UseCases", "StockManager.UseCases\StockManager.UseCases.csproj", "{BB9BACAD-30C5-4F25-B6B0-656D67460118}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockManager.Aplication", "StockManager.Aplication\StockManager.Aplication.csproj", "{BB9BACAD-30C5-4F25-B6B0-656D67460118}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
