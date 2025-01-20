@@ -7,7 +7,7 @@ namespace StockManager.Persistense.Context;
 
 public class ConnectionContext : DbContext
 {
-    public System.Data.Entity.DbSet<User> Users { get; set; }
+    public DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
