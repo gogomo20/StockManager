@@ -1,13 +1,15 @@
-using 
-    
-    
-    
-    
+using
+
+
+
+
     MediatR;
+using StockManager.Aplication.Utils;
 using StockManager.Domain.Entities;
 using StockManager.Persistense.Context;
+using StockManager.UseCases.UseCases.Users.Commands;
 
-namespace StockManager.UseCases.UseCases.Users.Commands.Create;
+namespace StockManager.Aplication.UseCases.Users.Commands.Create;
 
 public class CreateUserCommand : UserCommandBase
 {
@@ -31,8 +33,8 @@ public class CreateUserCommand : UserCommandBase
                     Password = request.Password
                 };
 
-                await _context.AddAsync(user);
-                await _context.SaveChangesAsync();
+                await _context.AddAsync(user, cancellationToken);
+                await _context.SaveChangesAsync(cancellationToken);
                 return user.Id;
             }
             catch (Exception e)

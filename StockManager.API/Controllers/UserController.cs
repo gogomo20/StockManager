@@ -1,6 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using StockManager.UseCases.UseCases.Users.Commands.Create;
+using StockManager.Aplication.UseCases.Users.Commands.Create;
 
 namespace StockManager.Controllers;
 

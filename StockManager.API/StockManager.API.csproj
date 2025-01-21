@@ -8,14 +8,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="MediatR.Extensions.Autofac.DependencyInjection" Version="12.2.0" />
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.11"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.1" />
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2"/>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.11" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.1">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\StockManager.Aplication\StockManager.Aplication.csproj" />
+      <ProjectReference Include="..\StockManager.Persistense\StockManager.Persistense.csproj" />
     </ItemGroup>
-
 </Project>

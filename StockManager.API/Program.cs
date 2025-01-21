@@ -1,5 +1,5 @@
-using System.Reflection;
-using StockManager.
+using Microsoft.AspNetCore.Connections;
+using StockManager.Aplication;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,10 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-builder.Services.AddMediatR(cfg =>
-    cfg.RegisterServicesFromAssembly());
+builder.Services.AddAplication();
+// builder.Services.AddPersistense();
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
