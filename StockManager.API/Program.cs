@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Connections;
+
 using StockManager.Aplication;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,8 +9,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddAplication();
 // builder.Services.AddPersistense();
-var app = builder.Build();
 
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -22,5 +22,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.MapControllers();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();

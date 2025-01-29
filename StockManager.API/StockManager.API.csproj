@@ -9,7 +9,7 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.11" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.1">
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
@@ -18,6 +18,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\StockManager.Aplication\StockManager.Aplication.csproj" />
-      <ProjectReference Include="..\StockManager.Persistense\StockManager.Persistense.csproj" />
+      <ProjectReference Include="..\StockManager.Repositories\StockManager.Repositories.csproj" />
     </ItemGroup>
 </Project>

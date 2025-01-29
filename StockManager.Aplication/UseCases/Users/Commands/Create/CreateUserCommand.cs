@@ -30,8 +30,8 @@ public class CreateUserCommand : UserCommandBase
                 {
                     UserName = request.UserName,
                     Name = request.Name,
-                    Password = request.Password
-                };
+                    Password = StringUtils.GetBcryptHash( request.Password)
+                }; 
 
                 await _context.AddAsync(user, cancellationToken);
                 await _context.SaveChangesAsync(cancellationToken);

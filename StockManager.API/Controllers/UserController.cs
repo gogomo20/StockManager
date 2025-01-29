@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StockManager.Aplication.UseCases.Users.Commands.Create;
 
@@ -16,6 +17,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand request,
         CancellationToken cancellationToken)
     {

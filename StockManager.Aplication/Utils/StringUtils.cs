@@ -15,5 +15,13 @@ namespace StockManager.Aplication.Utils
                 return Convert.ToHexString(hashBystes);
             }
         }
+        public static string GetBcryptHash(string pass)
+        {
+            return BCrypt.Net.BCrypt.HashPassword(pass, BCrypt.Net.BCrypt.GenerateSalt(10));
+        }
+        public static bool VerifyBcryptHash(string pass, string hash)
+        {
+            return BCrypt.Net.BCrypt.Verify(pass, hash);
+        }
     }
 }

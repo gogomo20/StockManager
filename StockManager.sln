@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockManager.API", "StockManager.API\StockManager.API.csproj", "{BD230A0B-1802-4DE0-947A-D7B2172F3E5B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BB9BACAD-30C5-4F25-B6B0-656D67460118} = {BB9BACAD-30C5-4F25-B6B0-656D67460118}
+		{7D9E73C9-78AD-4CF7-AA7F-1EB7120C7688} = {7D9E73C9-78AD-4CF7-AA7F-1EB7120C7688}
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{1BA2B04A-87D1-4DA1-977C-ED4F38E9C3A4}"
@@ -25,6 +26,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockManager.Aplication", "StockManager.Aplication\StockManager.Aplication.csproj", "{BB9BACAD-30C5-4F25-B6B0-656D67460118}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{584989CC-C377-4D12-9BD0-E417115C675B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockManager.Repositories", "StockManager.Repositories\StockManager.Repositories.csproj", "{7D9E73C9-78AD-4CF7-AA7F-1EB7120C7688}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,6 +55,10 @@ Global
 		{BB9BACAD-30C5-4F25-B6B0-656D67460118}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB9BACAD-30C5-4F25-B6B0-656D67460118}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB9BACAD-30C5-4F25-B6B0-656D67460118}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D9E73C9-78AD-4CF7-AA7F-1EB7120C7688}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D9E73C9-78AD-4CF7-AA7F-1EB7120C7688}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D9E73C9-78AD-4CF7-AA7F-1EB7120C7688}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D9E73C9-78AD-4CF7-AA7F-1EB7120C7688}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +69,7 @@ Global
 		{9F930503-54BE-40F6-B958-B429E309ACE9} = {20453645-6870-4AFA-89E5-5C915919E999}
 		{ADBA4264-6A5F-4702-A957-973BA57F0C40} = {9BD96C9A-B8D7-4B91-9151-7BEDCFB5A0AE}
 		{BB9BACAD-30C5-4F25-B6B0-656D67460118} = {9BD96C9A-B8D7-4B91-9151-7BEDCFB5A0AE}
+		{7D9E73C9-78AD-4CF7-AA7F-1EB7120C7688} = {584989CC-C377-4D12-9BD0-E417115C675B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42A69D63-33BC-4FF3-B42B-4FAB60274FFB}
