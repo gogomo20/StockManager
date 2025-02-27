@@ -2,7 +2,6 @@ using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Query;
-using StockManager.Persistense.Context;
 using System.Linq.Dynamic.Core;
 
 namespace StockManager.Repositories;

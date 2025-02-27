@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using StockManager.Domain.Entities;
 
@@ -8,9 +9,10 @@ namespace StockManager.Repositories.JWTRepository;
 
 public class TokenService
 {
-    public static object GenerateToken(User user)
+    public static object GenerateToken(User user, IOptions<JwtKey> options)
     {
-        var key = Encoding.ASCII.GetBytes(Key.Secret);
+        var jwtKey = options.Value;
+        var key = Encoding.ASCII.GetBytes(jwtKey.Secret ?? "");
         var tokenConfig = new SecurityTokenDescriptor
         {
             Subject = new System.Security.Claims.ClaimsIdentity(new Claim[]
