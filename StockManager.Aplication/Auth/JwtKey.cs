@@ -1,4 +1,4 @@
-namespace StockManager.Repositories.JWTRepository;
+namespace StockManager.Aplication.JWTRepository;
 
 public class JwtKey
 {

@@ -4,12 +4,11 @@ using StockManager.Repositories;
 
 namespace StockManager.StartupInstaller;
 
-public class APIInstallService : IInstaller
+public class ApiInstallService : IInstaller
 {
     public void InstallServices(IServiceCollection services, IConfiguration configuration)
     {
-        services.AddAplication();
+        services.AddAplication(configuration);
         services.ConfigureConnectionContext(configuration);
-        services.AddRepositories(configuration);
     }
 }

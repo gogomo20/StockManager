@@ -5,6 +5,7 @@ using StockManager.Aplication.UseCases.Users.Commands.Create;
 
 namespace StockManager.Controllers;
 
+
 [ApiController]
 [Route("api/v1/[controller]")]
 public class UserController : ControllerBase
@@ -17,7 +18,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize]
+    //[Authorize]
     public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand request,
         CancellationToken cancellationToken)
     {

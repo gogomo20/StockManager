@@ -21,7 +21,8 @@ namespace StockManager.Aplication.Utils
         }
         public static bool VerifyBcryptHash(string pass, string hash)
         {
-            return BCrypt.Net.BCrypt.Verify(pass, hash);
+            var verify = BCrypt.Net.BCrypt.Verify(pass, hash); // BCrypt.Verify()
+            return verify;
         }
     }
 }

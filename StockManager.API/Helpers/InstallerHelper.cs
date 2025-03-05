@@ -5,10 +5,10 @@ namespace StockManager.Helpers;
 
 public static class InstallerHelper
 {
-    public static void InstallServices(this IServiceCollection services, IConfiguration configuration)
+    public static void InstallServicesInAssembly(this IServiceCollection services, IConfiguration configuration)
     {
         var installers = Assembly.GetExecutingAssembly().GetTypes()
-            .Where(x => typeof(IInstaller).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)
+            .Where(x => typeof(IInstaller).IsAssignableFrom(x) && !x.IsInterface)
             .Select(Activator.CreateInstance)
             .Cast<IInstaller>().ToList();
 

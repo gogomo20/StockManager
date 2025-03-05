@@ -1,6 +1,6 @@
 namespace StockManager.StartupInstaller;
 
-public interface Installer
+public interface IInstaller
 {
     /// <summary>
     /// Install services

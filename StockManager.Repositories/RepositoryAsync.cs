@@ -23,6 +23,21 @@ public class RepositoryAsync<T> : IRepositoryAsync<T> where T : class
         return _dbSet.FindAsync(param);
     }
 
+    public async ValueTask<T?> SingleOrDefaultAsync(
+        Expression<Func<T, bool>> predicate,
+        Func<IQueryable<T>, IIncludableQueryable<T, object?>>? includes = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        IQueryable<T> query = _dbSet.AsNoTracking();
+        query = query.Where(predicate);
+        if (includes != null)
+            query = includes(query);
+
+        return await query.FirstOrDefaultAsync(cancellationToken);
+
+    }
+    
     public async Task<PaginatedResponse<T>> ListPaginateAsync(
         Expression<Func<T, bool>>? predicate = null,
         string? orderBy = null,

@@ -1,3 +1,4 @@
+using AutoMapper;
 using
 
 
@@ -6,7 +7,7 @@ using
     MediatR;
 using StockManager.Aplication.Utils;
 using StockManager.Domain.Entities;
-using StockManager.Persistense.Context;
+using StockManager.Repositories;
 using StockManager.UseCases.UseCases.Users.Commands;
 
 namespace StockManager.Aplication.UseCases.Users.Commands.Create;
@@ -15,26 +16,23 @@ public class CreateUserCommand : UserCommandBase
 {
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, long>
     {
-        private readonly ConnectionContext _context;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public CreateUserCommandHandler()
+        public CreateUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _context = new ConnectionContext();
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         public async Task<long> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var user = new User()
-                {
-                    UserName = request.UserName,
-                    Name = request.Name,
-                    Password = StringUtils.GetBcryptHash( request.Password)
-                }; 
-
-                await _context.AddAsync(user, cancellationToken);
-                await _context.SaveChangesAsync(cancellationToken);
+                var user = _mapper.Map<User>(request);
+                user.Password = StringUtils.GetBcryptHash(request.Password);
+                await _unitOfWork.GetRepositoryAsync<User>().InsertAsync(user);
+                await _unitOfWork.CommitAsync();
                 return user.Id;
             }
             catch (Exception e)

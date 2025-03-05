@@ -7,6 +7,11 @@ namespace StockManager.Repositories;
 public interface IRepositoryAsync<T> where T: class
 {
     ValueTask<T?> FindAsync(params object[] param);
+    ValueTask<T?> SingleOrDefaultAsync(
+        Expression<Func<T, bool>> predicate,
+        Func<IQueryable<T>, IIncludableQueryable<T, object?>>? includes = null,
+        CancellationToken cancellationToken = default
+    );
     Task<PaginatedResponse<T>> ListPaginateAsync(
         Expression<Func<T, bool>>? predicate = null,
         string? orderBy = null,

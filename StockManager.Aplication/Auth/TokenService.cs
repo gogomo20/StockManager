@@ -5,14 +5,13 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using StockManager.Domain.Entities;
 
-namespace StockManager.Repositories.JWTRepository;
+namespace StockManager.Aplication.JWTRepository;
 
 public class TokenService
 {
-    public static object GenerateToken(User user, IOptions<JwtKey> options)
+    public static string GenerateToken(User user, String secret)
     {
-        var jwtKey = options.Value;
-        var key = Encoding.ASCII.GetBytes(jwtKey.Secret ?? "");
+        var key = Encoding.ASCII.GetBytes(secret ?? "SECRET");
         var tokenConfig = new SecurityTokenDescriptor
         {
             Subject = new System.Security.Claims.ClaimsIdentity(new Claim[]
@@ -25,9 +24,6 @@ public class TokenService
         var tokenHandler = new JwtSecurityTokenHandler();
         var token = tokenHandler.CreateToken(tokenConfig);
         var tokenString = tokenHandler.WriteToken(token);
-        return new
-        {
-            token = tokenString
-        };
+        return tokenString;
     }
 }

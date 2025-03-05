@@ -10,7 +10,9 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
     {
         builder.HasKey(x => x.Id);
         builder.HasIndex(x => x.UserName);
-        builder.Property(x => x.UserName).HasMaxLength(255);
-        builder.Property(x => x.Name).HasMaxLength(255);
+        builder.HasIndex(x => x.Email);
+        builder.Property(x => x.UserName).HasMaxLength(255).IsRequired();
+        builder.Property(x => x.Name).HasMaxLength(255).IsRequired();
+        builder.Property(x => x.Email).HasMaxLength(255).IsRequired();
     }
 }
