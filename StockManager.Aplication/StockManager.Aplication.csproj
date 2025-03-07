@@ -21,6 +21,10 @@
       <ProjectReference Include="..\StockManager.Domain\StockManager.Domain.csproj" />
       <ProjectReference Include="..\StockManager.Repositories\StockManager.Repositories.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="UseCases\UserPermissions\" />
+    </ItemGroup>
     
 
 </Project>

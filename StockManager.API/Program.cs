@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using StockManager.Aplication;
 using StockManager.Aplication.JWTRepository;
+using StockManager.Aplication.MiddleWares;
 using StockManager.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,7 +20,6 @@ builder.Services.AddSwaggerGen(x =>
         Name = "Authorization",
         Type = SecuritySchemeType.ApiKey,
         Scheme = "Bearer",
-        BearerFormat = "JWT",
         In = ParameterLocation.Header
     });
     x.AddSecurityRequirement(new OpenApiSecurityRequirement()
@@ -41,6 +41,8 @@ builder.Services.AddSwaggerGen(x =>
     });
 });
 var key = builder.Configuration.GetSection("JwtKeyConfiguration:Secret").Value;
+builder.Services.AddControllers();
+builder.Services.InstallServicesInAssembly(builder.Configuration);
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -57,8 +59,6 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = false   
     };
 });
-builder.Services.AddControllers();
-builder.Services.InstallServicesInAssembly(builder.Configuration);
 // builder.Services.AddPersistense();
 
 var app = builder.Build();
@@ -71,10 +71,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseMiddleware<UserContextMiddleWare>();
+app.UseAuthorization();
 app.MapControllers();
 
-app.UseAuthentication();
-app.UseAuthorization();
+// app.UseAuthentication();
 
 app.Run();

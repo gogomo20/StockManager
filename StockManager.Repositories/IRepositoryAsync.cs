@@ -21,7 +21,9 @@ public interface IRepositoryAsync<T> where T: class
         int size = 10,
         CancellationToken cancellationToken = default
         );
+    ValueTask<bool> AnyAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default);
     ValueTask<EntityEntry<T>> InsertAsync(T entity);
+    IQueryable<T> GetQueryable();
     void Update(T entity);
     void Update(T[] entities);
     void Update(ICollection<T> entities);

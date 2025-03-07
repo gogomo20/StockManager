@@ -19,6 +19,7 @@ public static class ServiceExtension
             var dbContext = provider.GetRequiredService<ConnectionContext>();
             return new UnitOfWork<ConnectionContext>(dbContext);
         });
+        services.AddHttpContextAccessor();
         // services.AddUnitOfWork<ConnectionContext>();
     }
 }

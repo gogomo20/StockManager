@@ -8,4 +8,5 @@ public class User : BaseTable
     public required string UserName { get; set; }
     public required string Password { get; set; }
     public required string Email { get; set; }
+    public ICollection<Permission> Permissions { get; set; } = [];
 }

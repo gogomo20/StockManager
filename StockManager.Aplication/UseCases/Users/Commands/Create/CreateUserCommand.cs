@@ -5,6 +5,9 @@ using
 
 
     MediatR;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
+using StockManager.Aplication.Responses;
 using StockManager.Aplication.Utils;
 using StockManager.Domain.Entities;
 using StockManager.Repositories;
@@ -13,8 +16,9 @@ using StockManager.UseCases.UseCases.Users.Commands;
 namespace StockManager.Aplication.UseCases.Users.Commands.Create;
 
 public class CreateUserCommand : UserCommandBase
-{
-    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, long>
+{   
+    public string? Password { get; set; }
+    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, GenericResponse<long>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -25,21 +29,33 @@ public class CreateUserCommand : UserCommandBase
             _mapper = mapper;
         }
 
-        public async Task<long> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        public async Task<GenericResponse<long>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
+            var response = new GenericResponse<long>();
             try
             {
                 var user = _mapper.Map<User>(request);
                 user.Password = StringUtils.GetBcryptHash(request.Password);
+                user.Permissions = await GetUserPermissions(request.Permissions, cancellationToken);
                 await _unitOfWork.GetRepositoryAsync<User>().InsertAsync(user);
                 await _unitOfWork.CommitAsync();
-                return user.Id;
+                response.Data = user.Id;
+                response.Message = "User created successfully";
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                response.Errors = ["An Error occurred while creating the user"];
             }
+            return response;
+        }
+
+        public async Task<ICollection<Permission>> GetUserPermissions(ICollection<string> permissions,
+            CancellationToken cancellationToken)
+        {
+            return await _unitOfWork.GetRepositoryAsync<Permission>()
+                .GetQueryable()
+                .Where(x => permissions.Contains(x.Name))
+                .ToListAsync(cancellationToken);
         }
     }
 }

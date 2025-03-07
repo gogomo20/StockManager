@@ -1,3 +1,4 @@
+using System.Globalization;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +26,19 @@ public class CustomExeptionFilter : IExceptionFilter
                 context.Result = result;
                 context.ExceptionHandled = true;
                 break;
+            case KeyNotFoundException keyNotFoundException:
+                var notFoundResult = new ObjectResult(new GenericResponseNoData()
+                {
+                    Message = "Register not Found",
+                    Errors = new[] { keyNotFoundException.Message }
+                })
+                {
+                    StatusCode = StatusCodes.Status404NotFound
+                };
+                context.Result = notFoundResult;
+                context.ExceptionHandled = true;
+                break;
+                
         }
     }
 }

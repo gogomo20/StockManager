@@ -80,6 +80,17 @@ public class RepositoryAsync<T> : IRepositoryAsync<T> where T : class
         };
     }
 
+    public async ValueTask<bool> AnyAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
+    {
+        return await _dbSet.AnyAsync(predicate, cancellationToken);
+    }
+
+    public IQueryable<T> GetQueryable()
+    {
+        IQueryable<T> query = _dbSet.AsNoTracking();
+        return query;
+    }
+
     public ValueTask<EntityEntry<T>> InsertAsync(T entity)
     {
         return _dbSet.AddAsync(entity);

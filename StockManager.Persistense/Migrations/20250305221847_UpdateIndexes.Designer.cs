@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using StockManager.Persistense.Context;
@@ -11,9 +12,11 @@ using StockManager.Persistense.Context;
 namespace StockManager.Persistense.Migrations
 {
     [DbContext(typeof(ConnectionContext))]
-    partial class ConnectionContextModelSnapshot : ModelSnapshot
+    [Migration("20250305221847_UpdateIndexes")]
+    partial class UpdateIndexes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,9 +142,11 @@ namespace StockManager.Persistense.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PermissionId");
+                    b.HasIndex("PermissionId")
+                        .IsUnique();
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("UserPermissions");
                 });
@@ -149,14 +154,14 @@ namespace StockManager.Persistense.Migrations
             modelBuilder.Entity("StockManager.Domain.Entities.UserPermission", b =>
                 {
                     b.HasOne("StockManager.Domain.Entities.Permission", "Permission")
-                        .WithMany()
-                        .HasForeignKey("PermissionId")
+                        .WithOne()
+                        .HasForeignKey("StockManager.Domain.Entities.UserPermission", "PermissionId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("StockManager.Domain.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                        .WithOne()
+                        .HasForeignKey("StockManager.Domain.Entities.UserPermission", "UserId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
