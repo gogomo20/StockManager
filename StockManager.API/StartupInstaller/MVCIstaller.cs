@@ -14,5 +14,6 @@ public class MVCIstaller : IInstaller
     {
         services.Configure<ApiBehaviorOptions>(options => options.SuppressInferBindingSourcesForParameters = true);
         services.AddMvc(options => options.Filters.Add(new CustomExeptionFilter()));
+        services.AddMvc(options => options.Filters.Add<PermissionsFilter>());
     }
 }

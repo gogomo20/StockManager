@@ -18,6 +18,7 @@ namespace StockManager.Aplication.UseCases.Users.Commands.Create;
 public class CreateUserCommand : UserCommandBase
 {   
     public string? Password { get; set; }
+    public ICollection<string> Permissions { get; set; } = [];
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, GenericResponse<long>>
     {
         private readonly IUnitOfWork _unitOfWork;
