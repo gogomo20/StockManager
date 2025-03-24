@@ -23,7 +23,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
-    [Permission("CREATE_USER")]
+    [AllowAnonymous]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GenericResponse<long>))]
     public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand request,
         CancellationToken cancellationToken)

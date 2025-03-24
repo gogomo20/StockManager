@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using StockManager.Aplication.JWTRepository;
 using StockManager.Aplication.Responses;
@@ -31,7 +32,10 @@ public class LoginCommand : IRequest<GenericResponse<LoginResponse>>
             var response = new GenericResponse<LoginResponse>();
             try
             {
-                var user = await _unitOfWork.GetRepositoryAsync<User>().SingleOrDefaultAsync(x => x.UserName == request.UserName, cancellationToken: cancellationToken);
+                var user = await _unitOfWork.GetRepositoryAsync<User>().SingleOrDefaultAsync(
+                                                                    x => x.UserName == request.UserName,
+                                                                    includes: x => x.Include(_ => _.Permissions),
+                                                                    cancellationToken: cancellationToken);
                 if (user == null)
                 {
                     response.Errors = ["Usuário não encontrado"];
@@ -49,7 +53,8 @@ public class LoginCommand : IRequest<GenericResponse<LoginResponse>>
                 {
                     Name = user.Name,
                     Username = user.UserName,
-                    Token = TokenService.GenerateToken(user, _jwtKey.Secret ?? "")
+                    Token = TokenService.GenerateToken(user, _jwtKey.Secret ?? ""),
+                    Permissions = user.Permissions.Select(x => x.Name).ToList()
                 };
                 response.Message = "Usuário logado com sucesso";
             }

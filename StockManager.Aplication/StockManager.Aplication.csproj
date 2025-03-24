@@ -8,6 +8,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="UseCases\UserPermissions\**" />
+      <EmbeddedResource Remove="UseCases\UserPermissions\**" />
+      <None Remove="UseCases\UserPermissions\**" />
+    </ItemGroup>
+
+    <ItemGroup>
       <PackageReference Include="AutoMapper" Version="14.0.0" />
       <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
       <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
@@ -20,10 +26,6 @@
     <ItemGroup>
       <ProjectReference Include="..\StockManager.Domain\StockManager.Domain.csproj" />
       <ProjectReference Include="..\StockManager.Repositories\StockManager.Repositories.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="UseCases\UserPermissions\" />
     </ItemGroup>
     
 
