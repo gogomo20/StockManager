@@ -23,7 +23,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
-    [AllowAnonymous]
+    [Permission("CREATE_USER")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GenericResponse<long>))]
     public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand request,
         CancellationToken cancellationToken)
@@ -33,6 +33,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPut("{id:long}")]
+    [Permission("UPDATE_USER")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GenericResponse<long>))]
     public async Task<IActionResult> UpdateUser([FromRoute] long id, [FromBody] UpdateUserCommand request,
         CancellationToken cancellationToken)
@@ -43,11 +44,19 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("{id:long}")]
+    [Permission("GET_USER")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GenericResponse<UserResponse>))]
     public async Task<IActionResult> GetUser([FromRoute] long id, CancellationToken cancellationToken)
     {
         var response = new GetUserById() { Id = id };
         var result = await _mediator.Send(response, cancellationToken);
         return result.Success ? Ok(result) : BadRequest(result);
+    }
+    [HttpDelete("{id:long}")]
+    [Permission("DELETE_USER")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GenericResponse<long>))]
+    public async Task<IActionResult> DeleteUser([FromRoute] long id, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
     }
 }   

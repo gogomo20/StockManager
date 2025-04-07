@@ -36,7 +36,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
                 UserName = "admin",
                 Email = "admin@admin",
                 Password = StringUtils.GetBcryptHash("a123457z"),
-                Permissions = []
+                Permissions = [
+                ]
             });
     }
 }
