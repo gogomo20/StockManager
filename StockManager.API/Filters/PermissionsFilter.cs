@@ -32,7 +32,7 @@ public class PermissionsFilter : IAsyncActionFilter
             context.Result = new UnauthorizedResult();
             return;
         }
-        var roles = (user.Claims.FirstOrDefault(x => x.Type == "roles").Value ?? "").Split(',');
+        var roles = (user.Claims.FirstOrDefault(x => x.Type == "permissions")?.Value ?? "").Split(',');
 
         if (!roles.Contains(permissionAttribute))
         {
