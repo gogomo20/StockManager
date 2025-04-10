@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using StockManager.Persistense.Context;
@@ -11,9 +12,11 @@ using StockManager.Persistense.Context;
 namespace StockManager.Persistense.Migrations
 {
     [DbContext(typeof(ConnectionContext))]
-    partial class ConnectionContextModelSnapshot : ModelSnapshot
+    [Migration("20250321154450_AddUserAdminSeeding")]
+    partial class AddUserAdminSeeding
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,9 +48,6 @@ namespace StockManager.Persistense.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
-                    b.Property<long?>("PermissionGroupId")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -62,38 +62,6 @@ namespace StockManager.Persistense.Migrations
                         .IsUnique();
 
                     b.ToTable("Permissions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            Description = "Create user",
-                            Name = "CREATE_USER"
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            Description = "Update user",
-                            Name = "UPDATE_USER"
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            Description = "View user",
-                            Name = "GET_USER"
-                        },
-                        new
-                        {
-                            Id = 4L,
-                            Description = "List user",
-                            Name = "LIST_USER"
-                        },
-                        new
-                        {
-                            Id = 5L,
-                            Description = "Delete user",
-                            Name = "DELETE_USER"
-                        });
                 });
 
             modelBuilder.Entity("StockManager.Domain.Entities.User", b =>
@@ -151,7 +119,7 @@ namespace StockManager.Persistense.Migrations
                             Id = 1L,
                             Email = "admin@admin",
                             Name = "admin",
-                            Password = "$2a$10$2lpGDc.Y9BrKqxgY2LYXO.rao8vjH7TRNpjxN/u8SHrKdDiMZuLx6",
+                            Password = "$2a$10$xSn0QzvGyqa/PiEC5HCVGO9YUScfqESASF1OWL8dIxTUYBczMRaAq",
                             UserName = "admin"
                         });
                 });
@@ -189,38 +157,6 @@ namespace StockManager.Persistense.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserPermissions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            PermissionId = 1L,
-                            UserId = 1L
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            PermissionId = 2L,
-                            UserId = 1L
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            PermissionId = 3L,
-                            UserId = 1L
-                        },
-                        new
-                        {
-                            Id = 4L,
-                            PermissionId = 4L,
-                            UserId = 1L
-                        },
-                        new
-                        {
-                            Id = 5L,
-                            PermissionId = 5L,
-                            UserId = 1L
-                        });
                 });
 
             modelBuilder.Entity("StockManager.Domain.Entities.UserPermission", b =>

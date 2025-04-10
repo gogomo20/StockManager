@@ -20,8 +20,16 @@ public class AuthController : ControllerBase
     [ProducesResponseType(StatusCodes.Status202Accepted, Type = typeof(GenericResponse<LoginResponse>))]
     public async Task<IActionResult> Login([FromBody] LoginCommand command, CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(command, cancellationToken);
-        return response.Success ? Accepted(response) : BadRequest(response);
+        try
+        {
+            var response = await _mediator.Send(command, cancellationToken);
+            return response.Success ? Accepted(response) : BadRequest(response);
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
     }
     
 }

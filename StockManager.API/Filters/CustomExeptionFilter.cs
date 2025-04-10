@@ -14,8 +14,6 @@ public class CustomExeptionFilter : IExceptionFilter
         {
             case ValidationException validationException:
                 var errors = validationException.Errors.Select(error => $"{error.ErrorMessage}").ToList();
-                if (errors.Any() && !string.IsNullOrEmpty(context.Exception.Message))
-                    errors.Add(context.Exception.Message);
                 var result = new ObjectResult(new GenericResponseNoData()
                 {
                     Errors = errors.ToArray()

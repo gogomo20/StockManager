@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StockManager.Persistense.Context;
@@ -13,7 +14,15 @@ public static class ServiceExtension
     {
         var conn = configuration.GetConnectionString("DefaultConnection");
         services.AddDbContext<ConnectionContext>(options =>
-            options.UseNpgsql(conn));
+            {
+                options.UseNpgsql(conn);
+                options.ConfigureWarnings(warning =>
+                {
+                    warning.Ignore(CoreEventId.NavigationBaseIncludeIgnored);
+                    warning.Ignore(RelationalEventId.PendingModelChangesWarning);
+                });
+            }
+        );
         services.AddScoped<IUnitOfWork>(provider =>
         {
             var dbContext = provider.GetRequiredService<ConnectionContext>();

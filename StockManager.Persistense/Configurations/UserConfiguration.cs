@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using StockManager.Aplication.Utils;
 using StockManager.Domain.Entities;
 
 namespace StockManager.Persistense.Configurations;
@@ -27,5 +28,16 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
                 .HasForeignKey(fk => fk.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
         });
+        builder.HasData(
+            new User
+            {
+                Id = 1,
+                Name = "admin",
+                UserName = "admin",
+                Email = "admin@admin",
+                Password = StringUtils.GetBcryptHash("a123457z"),
+                Permissions = [
+                ]
+            });
     }
 }

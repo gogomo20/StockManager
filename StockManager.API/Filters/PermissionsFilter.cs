@@ -17,35 +17,34 @@ public class PermissionsFilter : IAsyncActionFilter
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
         var user = context.HttpContext.User;
-        if (!user.Identity.IsAuthenticated)
-        {
-            context.Result = new UnauthorizedResult();
-            return;
-        }
-        var userId = long.Parse(user.Claims.FirstOrDefault(x => x.Type == "userId").Value ?? "-1");
-        var getPermissionRequest
-            = new GetUserPermissions() { Id = userId };
-        var userPermissions = await _mediator.Send(getPermissionRequest);
         var permissionAttribute = context
                     .ActionDescriptor
                     .EndpointMetadata
                     .OfType<PermissionAttribute>()
                     .Select(x => x.Permission)
                     .FirstOrDefault();
-        if (permissionAttribute != null)
+        if (permissionAttribute == null) {
+            await next();
+            return;
+        }
+        if (!user.Identity.IsAuthenticated)
         {
-            if (!userPermissions.Contains(permissionAttribute))
+            context.Result = new UnauthorizedResult();
+            return;
+        }
+        var roles = (user.Claims.FirstOrDefault(x => x.Type == "permissions")?.Value ?? "").Split(',');
+
+        if (!roles.Contains(permissionAttribute))
+        {
+            var resultObject = new GenericResponseNoData()
             {
-                var resultObject = new GenericResponseNoData()
-                {
-                    Errors = new[] { "You do not have permission to perform this action" }
-                };
-                context.Result = new ObjectResult(resultObject)
-                {
-                    StatusCode = StatusCodes.Status403Forbidden
-                };
-                return;
-            }
+                Errors = new[] { "You do not have permission to perform this action" }
+            };
+            context.Result = new ObjectResult(resultObject)
+            {
+                StatusCode = StatusCodes.Status403Forbidden
+            };
+            return;
         }
         await next();
     }
