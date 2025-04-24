@@ -12,8 +12,8 @@ using StockManager.Persistense.Context;
 namespace StockManager.Persistense.Migrations
 {
     [DbContext(typeof(ConnectionContext))]
-    [Migration("20250407211043_AddPermissionToAdminUser")]
-    partial class AddPermissionToAdminUser
+    [Migration("20250424185953_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -64,6 +64,8 @@ namespace StockManager.Persistense.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
+                    b.HasIndex("PermissionGroupId");
+
                     b.ToTable("Permissions");
 
                     b.HasData(
@@ -71,31 +73,82 @@ namespace StockManager.Persistense.Migrations
                         {
                             Id = 1L,
                             Description = "Create user",
-                            Name = "CREATE_USER"
+                            Name = "CREATE_USER",
+                            PermissionGroupId = 1L
                         },
                         new
                         {
                             Id = 2L,
                             Description = "Update user",
-                            Name = "UPDATE_USER"
+                            Name = "UPDATE_USER",
+                            PermissionGroupId = 1L
                         },
                         new
                         {
                             Id = 3L,
                             Description = "View user",
-                            Name = "GET_USER"
+                            Name = "GET_USER",
+                            PermissionGroupId = 1L
                         },
                         new
                         {
                             Id = 4L,
                             Description = "List user",
-                            Name = "LIST_USER"
+                            Name = "LIST_USER",
+                            PermissionGroupId = 1L
                         },
                         new
                         {
                             Id = 5L,
                             Description = "Delete user",
-                            Name = "DELETE_USER"
+                            Name = "DELETE_USER",
+                            PermissionGroupId = 1L
+                        });
+                });
+
+            modelBuilder.Entity("StockManager.Domain.Entities.PermissionGroup", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(1)
+                        .HasColumnType("character varying(1)")
+                        .HasDefaultValue("A")
+                        .HasComment("A - Active, I - Inactive");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<long?>("UpdatedBy")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PermissionGroups");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Name = "User",
+                            Status = "A"
                         });
                 });
 
@@ -154,95 +207,19 @@ namespace StockManager.Persistense.Migrations
                             Id = 1L,
                             Email = "admin@admin",
                             Name = "admin",
-                            Password = "$2a$10$2lpGDc.Y9BrKqxgY2LYXO.rao8vjH7TRNpjxN/u8SHrKdDiMZuLx6",
+                            Password = "$2a$10$bUjK95O5a4OaOXt1I9CmOOzxNc3Sx8w.PjnZucc4KBlTWHl1ptMuS",
                             UserName = "admin"
                         });
                 });
 
-            modelBuilder.Entity("StockManager.Domain.Entities.UserPermission", b =>
+            modelBuilder.Entity("StockManager.Domain.Entities.Permission", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<long?>("CreatedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("PermissionId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<long?>("UpdatedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PermissionId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserPermissions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            PermissionId = 1L,
-                            UserId = 1L
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            PermissionId = 2L,
-                            UserId = 1L
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            PermissionId = 3L,
-                            UserId = 1L
-                        },
-                        new
-                        {
-                            Id = 4L,
-                            PermissionId = 4L,
-                            UserId = 1L
-                        },
-                        new
-                        {
-                            Id = 5L,
-                            PermissionId = 5L,
-                            UserId = 1L
-                        });
-                });
-
-            modelBuilder.Entity("StockManager.Domain.Entities.UserPermission", b =>
-                {
-                    b.HasOne("StockManager.Domain.Entities.Permission", "Permission")
+                    b.HasOne("StockManager.Domain.Entities.PermissionGroup", "PermissionGroup")
                         .WithMany()
-                        .HasForeignKey("PermissionId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("PermissionGroupId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("StockManager.Domain.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Permission");
-
-                    b.Navigation("User");
+                    b.Navigation("PermissionGroup");
                 });
 #pragma warning restore 612, 618
         }

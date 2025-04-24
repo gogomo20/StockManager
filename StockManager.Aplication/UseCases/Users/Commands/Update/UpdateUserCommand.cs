@@ -33,8 +33,7 @@ public class UpdateUserCommand : UserCommandBase
             try
             {
                 var user = await _unitOfWork.GetRepositoryAsync<User>()
-                                            .SingleOrDefaultAsync(x => x.Id == request.Id,
-                                                                    includes: x => x.Include(y => y.Permissions));
+                                            .SingleOrDefaultAsync(x => x.Id == request.Id);
                 if (user == null)
                 {
                     throw new KeyNotFoundException($"User with id {request.Id} not found");
@@ -43,11 +42,6 @@ public class UpdateUserCommand : UserCommandBase
                 if (request.NewPassword != null)
                 {
                     user.Password = StringUtils.GetBcryptHash(request.NewPassword);
-                }
-
-                if (request.NewPermissions != null && request.NewPermissions.Any())
-                {
-                    user.Permissions = await GetUserPermissions(request.NewPermissions, cancellationToken);
                 }
                 _unitOfWork.GetRepositoryAsync<User>().Update(user);
                 await _unitOfWork.CommitAsync();
