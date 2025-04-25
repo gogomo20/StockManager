@@ -4,7 +4,7 @@ using StockManager.Aplication.Responses;
 using StockManager.Aplication.UseCases.Auth.Command;
 using StockManager.Aplication.UseCases.Auth.Responses;
 
-namespace StockManager.Controllers;
+namespace StockManager.Controllers.v1;
 
 [ApiController]
 [Route("api/v1/[controller]")]
@@ -31,5 +31,5 @@ public class AuthController : ControllerBase
             throw;
         }
     }
-    
+
 }

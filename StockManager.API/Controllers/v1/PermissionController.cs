@@ -7,7 +7,7 @@ using StockManager.Aplication.UseCases.Permissions.Commands.Update;
 using StockManager.Aplication.UseCases.Permissions.Queries.Get;
 using StockManager.Aplication.UseCases.Permissions.Responses;
 
-namespace StockManager.Controllers;
+namespace StockManager.Controllers.v1;
 
 [Authorize]
 [ApiController]
@@ -27,7 +27,7 @@ public class PermissionController : ControllerBase
         CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(request, cancellationToken);
-        return response.Success ? Created("",response) : BadRequest(response);
+        return response.Success ? Created("", response) : BadRequest(response);
     }
 
     [HttpPut("{id:long}")]
@@ -39,7 +39,7 @@ public class PermissionController : ControllerBase
         var response = await _mediator.Send(request, cancellationToken);
         return response.Success ? Ok(response) : BadRequest(response);
     }
-    
+
     [HttpGet("{id:long}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GenericResponse<PermissionResponse>))]
     public async Task<IActionResult> GetPermission([FromRoute] long id, CancellationToken cancellationToken)
