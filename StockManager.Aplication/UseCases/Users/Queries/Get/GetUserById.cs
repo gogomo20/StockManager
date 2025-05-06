@@ -29,7 +29,7 @@ public class GetUserById : IRequest<GenericResponse<UserResponse>>
             try
             {
                 var user = await _unitOfWork.GetRepositoryAsync<User>()
-                    .SingleOrDefaultAsync(x => x.Id == request.Id,includes: x => x.Include(_ => _.Permissions));
+                    .SingleOrDefaultAsync(x => x.Id == request.Id);
                 if (user == null)
                 {
                     throw new KeyNotFoundException($"User with id {request.Id} not found");

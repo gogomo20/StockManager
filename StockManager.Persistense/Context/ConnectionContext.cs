@@ -17,17 +17,17 @@ public class ConnectionContext : DbContext
         _httpContextAccessor = httpContextAccessor;
     }
     public DbSet<User> Users { get; set; }
-    public DbSet<UserPermission> UserPermissions { get; set; }
     public DbSet<Permission> Permissions { get; set; }
+    public DbSet<PermissionGroup> PermissionGroups { get; set; }
     
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new UserConfiguration());
         modelBuilder.ApplyConfiguration(new PermissionConfiguration());
-        modelBuilder.ApplyConfiguration(new UserPermissionConfiguration());
+        modelBuilder.ApplyConfiguration(new PermissionGroupConfiguration());
     }
-
+    #region AuditChanges
     public override int SaveChanges()
     {
         UpdateAuditFields();
@@ -58,4 +58,5 @@ public class ConnectionContext : DbContext
             }
         }
     }
+    #endregion
 }

@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using StockManager.Domain.Entities;
-using System.Security.Cryptography.X509Certificates;
 
 namespace StockManager.Persistense.Configurations
 {
@@ -9,8 +8,10 @@ namespace StockManager.Persistense.Configurations
     {
         public void Configure(EntityTypeBuilder<PermissionGroup> builder) {
             builder.Property(x => x.Name).IsRequired().HasMaxLength(255);
-            //EF Relations
-            builder.HasMany(x => x.Permissions).WithOne().HasForeignKey(x => x.PermissionGroupId).OnDelete(DeleteBehavior.NoAction);
+            builder.Property(x => x.Status).IsRequired().HasMaxLength(1).HasComment("A - Active, I - Inactive").HasDefaultValue("A");
+            builder.HasData(
+                new PermissionGroup { Name = "User", Id = 1, Status = "A" }
+            );
         }
     }
 }

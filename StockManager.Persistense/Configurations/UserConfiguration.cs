@@ -16,18 +16,6 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(x => x.Name).HasMaxLength(255).IsRequired();
         builder.Property(x => x.Email).HasMaxLength(255).IsRequired();
         
-        // EF Configuration
-        builder.HasMany(x => x.Permissions).WithMany().UsingEntity<UserPermission>(x =>
-        {
-            x.HasOne(y => y.Permission)
-                .WithMany()
-                .HasForeignKey(fk => fk.PermissionId)
-                .OnDelete(DeleteBehavior.NoAction);
-            x.HasOne(y => y.User)
-                .WithMany()
-                .HasForeignKey(fk => fk.UserId)
-                .OnDelete(DeleteBehavior.NoAction);
-        });
         builder.HasData(
             new User
             {
@@ -35,9 +23,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
                 Name = "admin",
                 UserName = "admin",
                 Email = "admin@admin",
-                Password = StringUtils.GetBcryptHash("a123457z"),
-                Permissions = [
-                ]
+                Password = StringUtils.GetBcryptHash("a123457z")
             });
     }
 }

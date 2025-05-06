@@ -37,7 +37,6 @@ public class CreateUserCommand : UserCommandBase
             {
                 var user = _mapper.Map<User>(request);
                 user.Password = StringUtils.GetBcryptHash(request.Password);
-                user.Permissions = await GetUserPermissions(request.Permissions, cancellationToken);
                 await _unitOfWork.GetRepositoryAsync<User>().InsertAsync(user);
                 await _unitOfWork.CommitAsync();
                 response.Data = user.Id;
@@ -48,15 +47,6 @@ public class CreateUserCommand : UserCommandBase
                 response.Errors = ["An Error occurred while creating the user"];
             }
             return response;
-        }
-
-        public async Task<ICollection<Permission>> GetUserPermissions(ICollection<string> permissions,
-            CancellationToken cancellationToken)
-        {
-            return await _unitOfWork.GetRepositoryAsync<Permission>()
-                .GetQueryable()
-                .Where(x => permissions.Contains(x.Name))
-                .ToListAsync(cancellationToken);
         }
     }
 }

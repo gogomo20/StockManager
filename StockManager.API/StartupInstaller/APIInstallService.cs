@@ -10,5 +10,7 @@ public class ApiInstallService : IInstaller
     {
         services.AddAplication(configuration);
         services.ConfigureConnectionContext(configuration);
+
+        services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
     }
 }

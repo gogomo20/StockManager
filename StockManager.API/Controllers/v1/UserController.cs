@@ -8,7 +8,7 @@ using StockManager.UseCases.UseCases.Users.Commands.Update;
 using StockManager.UseCases.UseCases.Users.Queries.Get;
 using StockManager.UseCases.UseCases.Users.Responses;
 
-namespace StockManager.Controllers;
+namespace StockManager.Controllers.v1;
 
 [Authorize]
 [ApiController]
@@ -59,4 +59,4 @@ public class UserController : ControllerBase
     {
         throw new NotImplementedException();
     }
-}   
+}
